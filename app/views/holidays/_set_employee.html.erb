@@ -1,0 +1,64 @@
+<article class="message is-info">
+  <div class="message-body">
+    <nav class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <figure class="image is-64x64">
+            <img class="is-rounded" src="<%= employee.user.display_url %>">
+          </figure>
+        </div>
+        <div class="level-item">
+          <span class="subtitle is-5"><%= employee.number %> <%= employee.user.fullname %></span>
+        </div>
+      </div>
+    </nav>
+  </div>
+</article>
+
+<div class="columns">
+  <div class="column is-half">
+
+    <% Term.last(3).each do |term| %>
+      <article class="message is-success mb-0">
+        <div class="message-body">
+          <div class="level mb-1">
+            <nav class="level-left">
+              <div class="level-item ">
+                <div>
+                  <p class="heading">Periodo</p>
+                  <p class="subtitle"><%= term.code %></p>
+                </div>
+              </div>
+            </nav>
+            <div class="level-item ">
+              <div>
+                <p class="heading">Fechas</p>
+                <p class="subtitle is-light">
+                  <%= term.start %>
+                  <span class="icon is-small"><i class="fas fa-arrow-right is-small"></i></span>
+                  <%= term.end %>
+                </p>
+              </div>
+            </div>
+            <nav class="level-right">
+              <div class="level-item ">
+                <div>
+                  <p class="heading">Días</p>
+                  <% days = employee.holidays.select{ |h| h.term_id == term.id}.size %>
+                  <% if days != 10  %>
+                    <p class="subtitle is-danger has-text-danger"><%= days %></p>
+                  <% else %>
+                    <p class="subtitle is-success"><%= days %></p>
+                  <% end %>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </article>
+      <table class="table is-narrow is-fullwidth" id="table-term-<%= term.id %>" >
+            <%= render :partial=>'holidays/holidays', :locals => {:term=> term, :employee=> employee} %>
+      </table>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+<tr>
+  <% status = 2 %>
+  <td>
+          <table class="table is-striped is-narrow is-fullwidth is-hoverable is-bordered" >
+            <thead>
+              <tr>
+                <th>
+                  <div class="tags has-addons">
+                    <span class="tag is-medium"><%=  Holiday.class_variable_get(:@@STATUS)[status] %></span>
+                  </div>
+                </th>
+                <th>
+                  <div class="tags has-addons">
+                    <% days = employee.holidays.select{ |h| h.term_id == term.id and h.day < Date.today }.size %>
+                    <% if days > 10 %>
+                      <span class="tag is-medium is-danger"><%= days %></span>
+                    <% else %>
+                      <span class="tag is-medium is-primary"><%= days %></span>
+                    <% end %>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <% employee.holidays.select{ |h| h.term_id == term.id and h.day < Date.today }.sort_by{|h| h[:day]}.each do |holy| %>
+              <tr>
+                <td><%= holy.day %></td>
+                <td>
+                  <div class="buttons">
+                    <button class="button <%= holy.check_range ? 'is-success' : 'is-info' %> is-light is-small reschedule-modal-btn is-rounded"
+                            data-target="#reschedule-modal" data-holy-id="<%= holy.id %>" data-holy-day="<%= holy.day %>">
+                      <span class="icon"><i class="fa fa-calendar"></i></span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+  </td>
+
+  <% status = 1 %>
+  <td>
+          <table class="table is-striped is-narrow is-fullwidth is-hoverable is-bordered" >
+            <thead>
+            <tr>
+              <th>
+                <div class="tags has-addons">
+                  <span class="tag is-medium"><%=  Holiday.class_variable_get(:@@STATUS)[status] %></span>
+                </div>
+              </th>
+              <th>
+                <div class="tags has-addons">
+                  <% days = employee.holidays.select{ |h| h.term_id == term.id and h.day >= Date.today }.size %>
+                  <% if days > 10 %>
+                    <span class="tag is-medium is-danger"><%= days %></span>
+                  <% else %>
+                    <span class="tag is-medium is-primary"><%= days %></span>
+                  <% end %>
+                </div>
+              </th>
+            </tr>
+            </thead>
+            <% employee.holidays.select{ |h| h.term_id == term.id and h.day >= Date.today }.sort_by{|h| h[:day]}.each do |holy| %>
+              <tr>
+                <td><%= holy.day %></td>
+                <td>
+                  <div class="buttons">
+                    <button class="button <%= holy.check_range ? 'is-success' : 'is-info' %> is-light is-small reschedule-modal-btn is-rounded"
+                            data-target="#reschedule-modal" data-holy-id="<%= holy.id %>" data-holy-day="<%= holy.day %>">
+                        <span class="icon"><i class="fa fa-calendar"></i></span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+  </td>
+</tr>

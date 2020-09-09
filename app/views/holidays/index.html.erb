@@ -1,0 +1,103 @@
+<p class="title mt-2">Vacaciones | <span class="subtitle">Programación</span></p>
+
+<div class="columns mb-0">
+  <div class="column is-one-third">
+    <div class="field">
+      <label class="label">Empleado</label>
+      <div class="control">
+        <%= select("get", "employee_id", @employees.collect {|e| [ e.user.fullname, e.id ] }, { include_blank: false }) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id='schedule-container' class="container">
+  <%= render :partial=>'holidays/set_employee', :locals => {:employee=> @employees.first} %>
+</div>
+
+<!-- ------------------------------------ -->
+<!-- Modal for Re-Schedule a specific Day -->
+<div id="reschedule-modal" class="modal">
+  <div class="modal-background"></div>
+
+  <div class="modal-content">
+    <div class="column is-half">
+      <button class="delete modal-close-reschedule-day is-pulled-right" style="margin: 5px;" aria-label="close"></button>
+      <div class="box">
+        <%= form_for Holiday.new, :url=>{:controller=>'holidays', :action=>'reschedule_day',
+                                         :method=>'post', :validate=>true, :format=>:js, :remote=>true,
+                                         :multipart=>true},
+                     :multipart=>true, :remote=>true, :html => {:multipart => true,:remote=>true} do |f| %>
+          <%= f.hidden_field :id,  id:'holy-id-field' %>
+          <div class="field">
+            <label class="label">Seleccionar día destino:</label>
+            <div class="control">
+              <%= f.text_field :day, id:'new-holy-day-field', class:'input', type:'date', placeholder:'Día nuevo'  %>
+            </div>
+          </div>
+          <div class="field is-grouped  ">
+            <div class="control">
+              <button class="button is-link modal-close-reschedule-day">
+                    <span class = "icon is-small">
+                      <i class = "fas fa-check"></i>
+                    </span>
+                <span>Cambiar día</span>
+              </button>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+  <!-- <button class="modal-close is-large" aria-label="close">Here</button> -->
+</div>
+
+<script>
+
+    $(function() {
+        $(document).on('click', '.reschedule-modal-btn', function() {
+            // abre re-schedule modal y le inserta holy-id y holy-day a la form
+            let target = $(this).data("target");
+            // console.log('Holyd> ', $(this).data("holy-id"), $(this).data("holy-day"));
+            $("html").addClass("is-clipped");
+            $(target).addClass("is-active");
+            $("#new-holy-day-field").val($(this).data("holy-day"));
+            $("#holy-id-field").val($(this).data("holy-id"));
+        })
+    });
+    $(".modal-close-reschedule-day").click(function() {
+        // cierra re-schedule modal
+        $("html").removeClass("is-clipped");
+        $("#reschedule-modal").removeClass("is-active");
+    });
+
+    $(function() {
+        // selectpicker Bulma Live Search
+        $('select').selectize();
+    });
+
+    $(function() {
+      $(document).on('change', '#get_employee_id', function() {
+          let employee_id = $(this).val();
+          if (employee_id) {
+              $.get("/holidays/set_employee/" + employee_id);
+              /*
+              $.get("/holidays/schedule/" + employee_id).done(function (data) {
+                  let response = data;
+                  $('#schedule-container').html(response);
+              }).fail(function (error) {
+                  console.log('Error: ' + error);
+              });
+              */
+          } else {
+              $('#schedule-container').html(
+                  '<article class="message is-info">' +
+                  '  <div class="message-body">' +
+                  '     <h5 class=subtitle is-5">No hay empleado seleccionado</h5>' +
+                  '  </div>' +
+                  '</article>');
+          }
+      });
+    });
+</script>

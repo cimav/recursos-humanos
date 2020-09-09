@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html class='has-navbar-fixed-top' style="padding-top: 0">
+  <head>
+    <title>Recursos Humanos CIMAV</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag '//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- selectpicker Bulma Live Search -->
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
+    <%= stylesheet_link_tag  'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.0/css/bulma.min.css' %>
+    <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.min.css' %>
+
+  </head>
+
+  <body>
+
+    <nav class="navbar is-success" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/"><strong>Recursos Humanos CIMAV</strong></a>
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarAsistencia">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              <nav class="level">
+                  <div class="level-item">
+                    <figure class="image is-32x32">
+                      <img src="<%= current_user.display_url %>" class="nav-menu-img is-rounded" alt="<%= current_user.account %>">
+                    </figure>
+                    <div class="level-item">
+                      <span class="ml-2"><%= current_user.shortname %></span>
+                    </div>
+                  </div>
+              </nav>
+            </a>
+            <div class="navbar-dropdown is-right">
+              <%= link_to 'Salir', '/logout', class: 'navbar-item' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- <progress id="progress-bar" class="progress is-small is-primary" max="100" style="height:.5rem;">10%</progress> -->
+    <div class="container ">
+      <%= yield %>
+    </div>
+
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  </body>
+</html>
+
+<script>
+  /*
+  $(function() {
+    $(".progress-bar").hide();
+    $(document).ajaxStart(function () {
+      $(".progress-bar").show();
+    });
+    $(document).ajaxStop(function () {
+      $(".progress-bar").hide();
+    });
+  });
+   */
+</script>;
