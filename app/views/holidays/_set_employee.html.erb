@@ -16,24 +16,23 @@
 </article>
 
 <div class="columns">
-  <div class="column is-half">
-
-    <% Term.last(3).each do |term| %>
+  <% Term.last(3).each do |term| %>
+    <div class="column is-one-third">
       <article class="message is-success mb-0">
         <div class="message-body">
           <div class="level mb-1">
             <nav class="level-left">
               <div class="level-item ">
                 <div>
-                  <p class="heading">Periodo</p>
-                  <p class="subtitle"><%= term.code %></p>
+                  <p class="heading is-6">Periodo</p>
+                  <p class="subtitle is-6"><%= term.code %></p>
                 </div>
               </div>
             </nav>
             <div class="level-item ">
               <div>
-                <p class="heading">Fechas</p>
-                <p class="subtitle is-light">
+                <p class="heading is-6">Fechas</p>
+                <p class="subtitle is-6 is-light">
                   <%= term.start %>
                   <span class="icon is-small"><i class="fas fa-arrow-right is-small"></i></span>
                   <%= term.end %>
@@ -43,12 +42,12 @@
             <nav class="level-right">
               <div class="level-item ">
                 <div>
-                  <p class="heading">Días</p>
+                  <p class="heading is-6">Días</p>
                   <% days = employee.holidays.select{ |h| h.term_id == term.id}.size %>
                   <% if days != 10  %>
-                    <p class="subtitle is-danger has-text-danger"><%= days %></p>
+                    <p class="subtitle is-6 is-danger has-text-danger"><%= days %></p>
                   <% else %>
-                    <p class="subtitle is-success"><%= days %></p>
+                    <p class="subtitle is-6 is-success"><%= days %></p>
                   <% end %>
                 </div>
               </div>
@@ -56,9 +55,9 @@
           </div>
         </div>
       </article>
-      <table class="table is-narrow is-fullwidth" id="table-term-<%= term.id %>" >
-            <%= render :partial=>'holidays/holidays', :locals => {:term=> term, :employee=> employee} %>
-      </table>
-    <% end %>
-  </div>
+      <div class="columns" id="table-term-<%= term.id %>">
+        <%= render :partial=>'holidays/holidays', :locals => {:term=> term, :employee=> employee} %>
+      </div>
+    </div>
+  <% end %>
 </div>

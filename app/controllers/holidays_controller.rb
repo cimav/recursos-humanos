@@ -33,10 +33,10 @@ class HolidaysController < ApplicationController
 
     holy.save!
 
-    term = Term.find(holy.term_id)
+    # term = Term.find(holy.term_id)
 
     respond_to do |format|
-      format.js { render 'reschedule_day', locals: {term: term, employee: holy.employee} }
+      format.js { render 'reschedule_day', locals: {term: holy.term, employee: holy.employee} }
     end
 
   end
