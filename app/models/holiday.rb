@@ -20,4 +20,23 @@ class Holiday < ApplicationRecord
     (term.start..term.end).cover?(day)
   end
 
+  def situation
+    if Holiday.where(employee_id: employee_id, day: day).limit(3).pluck(:term_id, :employee_id, :day).size > 1
+      # duplicada
+      'is-danger'
+    elsif !(term.start - 6.months..term.end + 6.months).cover?(day)
+      # fuera del año
+      'is-danger is-light'
+    elsif !(term.start..term.end).cover?(day)
+      # fuera del periodo de vacaciones ordinarias
+      'is-info is-light'
+    elsif [0, 6].include?(day.wday)
+      # es fin de semana todo faltan días festivos
+      'is-warning is-light'
+    else
+      # dentro del periodo ordinario y correcto
+      'is-success is-light'
+    end
+  end
+
 end

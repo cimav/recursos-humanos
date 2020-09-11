@@ -20,10 +20,10 @@
       <% holidays.sort_by{|h| h[:day]}.each do |holy| %>
         <tr>
           <td>
-            <span class="button <%= holy.check_range ? 'is-success' : 'is-info' %> is-light is-small reschedule-modal-btn is-rounded is-fullwidth"
+            <span class="button <%= holy.situation %> is-small reschedule-modal-btn is-rounded is-fullwidth"
                     data-target="#reschedule-modal" data-holy-id="<%= holy.id %>" data-holy-day="<%= holy.day %>">
-              <span><%= holy.day %></span>
               <span class="icon"><i class="fa fa-calendar"></i></span>
+              <span><%= holy.day %></span>
             </span>
           </td>
         </tr>

@@ -16,6 +16,14 @@
 </article>
 
 <div class="columns">
+  <div class="column"><span class="tag is-success is-light">Ordinario</span></div>
+  <div class="column"><span class="tag is-info is-light">Re-programado</span></div>
+  <div class="column"><span class="tag is-warning is-light">Festivo</span></div>
+  <div class="column"><span class="tag is-danger is-light">Fuera del periodo</span></div>
+  <div class="column"><span class="tag is-danger">Duplicado</span></div>
+</div>
+
+<div class="columns">
   <% Term.last(3).each do |term| %>
     <div class="column is-one-third">
       <article class="message is-success mb-0">
