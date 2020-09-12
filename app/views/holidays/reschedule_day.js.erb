@@ -1,2 +1,3 @@
 new_content = "<%= escape_javascript render :partial=>'holidays/holidays', :locals => {:term=> term, :employee=> employee} %>";
 $('#table-term-' + <%= term.id %>).html(new_content);
+$("#page-loader").removeClass('is-active');

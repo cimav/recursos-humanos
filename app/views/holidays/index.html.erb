@@ -15,6 +15,10 @@
   <%= render :partial=>'holidays/set_employee', :locals => {:employee=> @employees.first} %>
 </div>
 
+<!-- ----------- -->
+<!-- Page Loader -->
+<div id="page-loader" class="pageloader is-success is-light"><span class="title">Cargando...</span></div>
+
 <!-- ------------------------------------ -->
 <!-- Modal for Re-Schedule a specific Day -->
 <div id="reschedule-modal" class="modal">
@@ -37,7 +41,7 @@
           </div>
           <div class="field is-grouped  ">
             <div class="control">
-              <button class="button is-link modal-close-reschedule-day">
+              <button class="button is-link modal-close-reschedule-day" id="modal-close-reschedule-day-btn">
                     <span class = "icon is-small">
                       <i class = "fas fa-check"></i>
                     </span>
@@ -71,7 +75,10 @@
         $("html").removeClass("is-clipped");
         $("#reschedule-modal").removeClass("is-active");
     });
-
+    $("#modal-close-reschedule-day-btn").on('click', function (){
+        $("#page-loader").addClass('is-active');
+        console.log('just');
+    });
     $(function() {
         // selectpicker Bulma Live Search
         $('select').selectize();
@@ -81,15 +88,19 @@
       $(document).on('change', '#get_employee_id', function() {
           let employee_id = $(this).val();
           if (employee_id) {
+              $("#page-loader").addClass('is-active')
               $.get("/holidays/set_employee/" + employee_id);
               /*
-              $.get("/holidays/schedule/" + employee_id).done(function (data) {
-                  let response = data;
-                  $('#schedule-container').html(response);
-              }).fail(function (error) {
-                  console.log('Error: ' + error);
+              $("#page-loader").addClass('is-active')
+              $.ajax({
+                  type: "GET",
+                  async: false,
+                  url: "/holidays/set_employee/" + employee_id,
+                  complete: function () {
+                      $("#page-loader").removeClass('is-active')
+                  }
               });
-              */
+               */
           } else {
               $('#schedule-container').html(
                   '<article class="message is-info">' +
