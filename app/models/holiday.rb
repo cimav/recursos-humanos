@@ -2,6 +2,9 @@ class Holiday < ApplicationRecord
   belongs_to :term
   belongs_to :employee
 
+  attr_accessor :hollies
+  attr_accessor :initial_day
+
   SCHEDULED = 1
   TAKEN = 2
   RESCHEDULED = 3

@@ -1,6 +1,7 @@
 class Term < ApplicationRecord
   # has_many :holidays
 
+=begin
   @holidays_by_status
 
   def holidays_count(status)
@@ -11,5 +12,6 @@ class Term < ApplicationRecord
   def holidays_by_status
     @holidays_by_status
   end
+=end
 
 end

@@ -1,4 +1,4 @@
-<p class="title mt-2">Vacaciones | <span class="subtitle">Programación</span></p>
+<p class="title mt-2">Vacaciones</p>
 
 <div class="columns mb-0">
   <div class="column is-one-third">
@@ -32,11 +32,11 @@
                                          :method=>'post', :validate=>true, :format=>:js, :remote=>true,
                                          :multipart=>true},
                      :multipart=>true, :remote=>true, :html => {:multipart => true,:remote=>true} do |f| %>
-          <%= f.hidden_field :id,  id:'holy-id-field' %>
+          <%= f.hidden_field :hollies, id:'hollies-field', :multiple => true %>
           <div class="field">
-            <label class="label">Seleccionar día destino:</label>
+            <label class="label">Seleccionar día inicial:</label>
             <div class="control">
-              <%= f.text_field :day, id:'new-holy-day-field', class:'input', type:'date', placeholder:'Día nuevo'  %>
+              <%= f.text_field :initial_day, id:'initial-day-field', class:'input', type:'date', placeholder:'Día inicial', value:Date.today %>
             </div>
           </div>
           <div class="field is-grouped  ">
@@ -66,8 +66,15 @@
             // console.log('Holyd> ', $(this).data("holy-id"), $(this).data("holy-day"));
             $("html").addClass("is-clipped");
             $(target).addClass("is-active");
-            $("#new-holy-day-field").val($(this).data("holy-day"));
-            $("#holy-id-field").val($(this).data("holy-id"));
+            //$("#new-holy-day-field").val($(this).data("holy-day"));
+            //$("#holy-id-field").val($(this).data("holy-id"));
+
+            let col_id = '#table-term-' + $(this).data("term-id") + '-col-' + $(this).data("col-id") ;
+            let hollies = [];
+            $(col_id + " input:checked").each(function(){
+                hollies.push($(this).val());
+            });
+            $("#hollies-field").val(hollies);
         })
     });
     $(".modal-close-reschedule-day").click(function() {
@@ -77,7 +84,6 @@
     });
     $("#modal-close-reschedule-day-btn").on('click', function (){
         $("#page-loader").addClass('is-active');
-        console.log('just');
     });
     $(function() {
         // selectpicker Bulma Live Search

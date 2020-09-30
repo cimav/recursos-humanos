@@ -1,6 +1,6 @@
 <% (1..2).each do |b| %>
   <div class="column is-half <%= (b==1) ? 'pr-0' : 'pl-0' %>">
-    <table class="table is-striped is-narrow is-hoverable is-fullwidth is-bordered" >
+    <table class="table is-striped is-narrow is-hoverable is-fullwidth is-bordered" id="table-term-<%= term.id %>-col-<%= b %>">
       <% holidays = employee.holidays.select{ |h| h.term_id == term.id and ((b==1)? h.day < Date.today : h.day >= Date.today) } %>
       <thead>
         <tr>
@@ -20,14 +20,23 @@
       <% holidays.sort_by{|h| h[:day]}.each do |holy| %>
         <tr>
           <td>
-            <span class="button <%= holy.situation %> is-small reschedule-modal-btn is-rounded is-fullwidth"
-                    data-target="#reschedule-modal" data-holy-id="<%= holy.id %>" data-holy-day="<%= holy.day %>">
-              <span class="icon"><i class="fa fa-calendar"></i></span>
-              <span><%= holy.day %></span>
+            <span class="tag <%= holy.situation %> day-cell is-small is-rounded is-fullwidth">
+                <%= check_box_tag 'hollies', holy.id %>
+              <span class="day-span"><%= holy.day %></span>
             </span>
           </td>
         </tr>
       <% end %>
+      <tfoot>
+        <tr>
+          <td>
+            <button class="button reschedule-modal-btn cell-btn is-success is-outlined is-small is-pulled-right"
+                    data-target="#reschedule-modal" data-term-id="<%= term.id %>" data-col-id="<%= b %>">
+              Cambiar
+            </button>
+          </td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 <% end %>

@@ -15,20 +15,12 @@
   </div>
 </article>
 
-<div class="columns  mb-0 has-text-centered">
-  <div class="column"><span class="tag color-code is-success is-light is-small is-rounded">Ordinario</span></div>
-  <div class="column"><span class="tag color-code is-info is-light is-small is-rounded" style="border-color: #48c774;">Re-programado</span></div>
-  <div class="column"><span class="tag color-code is-warning is-light is-small is-rounded">Festivo</span></div>
-  <div class="column"><span class="tag color-code is-danger is-light is-small is-rounded">Fuera del periodo</span></div>
-  <div class="column"><span class="tag color-code is-danger  is-small is-rounded">Duplicado</span></div>
-</div>
-
 <div class="columns">
   <% Term.last(3).each do |term| %>
     <div class="column is-one-third">
       <% days = employee.holidays.select{ |h| h.term_id == term.id}.size %>
       <article class="message is-success mb-0" style="position: relative;">
-        <div class="message-body">
+        <div class="message-body message-body-term">
           <span class="badge  <% (days==10)? 'is-success' : 'is-danger'  %> is-outlined"><%= days %></span>
           <div class="level mb-1">
             <nav class="level-left">
@@ -60,3 +52,12 @@
     </div>
   <% end %>
 </div>
+
+<div class="columns  mb-0 has-text-centered">
+  <div class="column"><span class="tag color-code is-success is-light is-small is-rounded">Ordinario</span></div>
+  <div class="column"><span class="tag color-code is-info is-light is-small is-rounded" style="border-color: #48c774;">Re-programado</span></div>
+  <div class="column"><span class="tag color-code is-warning is-light is-small is-rounded">Festivo</span></div>
+  <div class="column"><span class="tag color-code is-danger is-light is-small is-rounded">Fuera del periodo</span></div>
+  <div class="column"><span class="tag color-code is-danger  is-small is-rounded">Duplicado</span></div>
+</div>
+
