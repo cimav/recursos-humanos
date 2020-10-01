@@ -34,7 +34,6 @@ class HolidaysController < ApplicationController
     holy_ids.each do |h_id|
       holy = Holiday.find(h_id)
       holy.day = next_day
-
       holy.save!
 
       next_day = skip_weekends(next_day, 1)

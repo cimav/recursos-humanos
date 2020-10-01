@@ -16,7 +16,9 @@
 </article>
 
 <div class="columns">
+  <% t = 0 %>
   <% Term.last(3).each do |term| %>
+    <% t += 1 %>
     <div class="column is-one-third">
       <% days = employee.holidays.select{ |h| h.term_id == term.id}.size %>
       <article class="message is-success mb-0" style="position: relative;">
@@ -26,7 +28,11 @@
             <nav class="level-left">
               <div class="level-item ">
                 <div>
-                  <p class="heading is-6">Periodo</p>
+                  <p class="heading is-6"><%= if (t == 1)
+                                                'Anterior'
+                                              else
+                                                (t == 2) ? 'Actual' : 'Posterior'
+                                              end %></p>
                   <p class="subtitle is-6"><%= term.code %></p>
                 </div>
               </div>
@@ -53,11 +59,11 @@
   <% end %>
 </div>
 
-<div class="columns  mb-0 has-text-centered">
+<div class="columns  mb-0 ">
+  <div class="column"><h2 class="subtitle">Códigos color</h2></div>
   <div class="column"><span class="tag color-code is-success is-light is-small is-rounded">Ordinario</span></div>
   <div class="column"><span class="tag color-code is-info is-light is-small is-rounded" style="border-color: #48c774;">Re-programado</span></div>
   <div class="column"><span class="tag color-code is-warning is-light is-small is-rounded">Festivo</span></div>
   <div class="column"><span class="tag color-code is-danger is-light is-small is-rounded">Fuera del periodo</span></div>
   <div class="column"><span class="tag color-code is-danger  is-small is-rounded">Duplicado</span></div>
 </div>
-

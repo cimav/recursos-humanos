@@ -45,7 +45,7 @@
                     <span class = "icon is-small">
                       <i class = "fas fa-check"></i>
                     </span>
-                <span>Cambiar día</span>
+                <span>Cambiar día(s)</span>
               </button>
             </div>
           </div>
@@ -61,20 +61,22 @@
 
     $(function() {
         $(document).on('click', '.reschedule-modal-btn', function() {
-            // abre re-schedule modal y le inserta holy-id y holy-day a la form
-            let target = $(this).data("target");
-            // console.log('Holyd> ', $(this).data("holy-id"), $(this).data("holy-day"));
-            $("html").addClass("is-clipped");
-            $(target).addClass("is-active");
-            //$("#new-holy-day-field").val($(this).data("holy-day"));
-            //$("#holy-id-field").val($(this).data("holy-id"));
 
+            // colecta los días seleccionados a cambiar
             let col_id = '#table-term-' + $(this).data("term-id") + '-col-' + $(this).data("col-id") ;
             let hollies = [];
             $(col_id + " input:checked").each(function(){
                 hollies.push($(this).val());
             });
-            $("#hollies-field").val(hollies);
+            if (hollies.length > 0) {
+                // abre re-schedule modal y le inserta hollies a la form
+                $("#hollies-field").val(hollies);
+                let target = $(this).data("target");
+                $("html").addClass("is-clipped");
+                $(target).addClass("is-active");
+            } else {
+                // alert('No hay selección');
+            }
         })
     });
     $(".modal-close-reschedule-day").click(function() {

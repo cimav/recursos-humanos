@@ -4,7 +4,7 @@
       <% holidays = employee.holidays.select{ |h| h.term_id == term.id and ((b==1)? h.day < Date.today : h.day >= Date.today) } %>
       <thead>
         <tr>
-          <th>
+          <th class="header-situation">
             <div class="tags has-addons">
               <% count = holidays.size %>
               <span class="tag "><%= (b==1) ? 'Tomados' : 'Programados' %></span>
