@@ -1,12 +1,14 @@
 class HolidaysController < ApplicationController
 
+  # protect_from_forgery except: :set_employee
+
   before_action :auth_required
 
   @role_ids = []
 
   def index
     # sin holidays
-    @employees = Employee.select(:id, :people_id, :number).where('id > 396') #.pluck(:id, :people_id, :number)
+    @employees = Employee.select(:id, :people_id, :number, :department_id, :boss_id, :entry_date) #.where('id > 396') #.pluck(:id, :people_id, :number)
   end
 
   def set_employee
